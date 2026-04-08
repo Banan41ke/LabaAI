@@ -4,7 +4,8 @@ from sklearn.metrics import (
     confusion_matrix,
     classification_report,
     mean_squared_error,
-    mean_absolute_error
+    mean_absolute_error,
+    r2_score
 )
 
 # ОЦЕНКА КЛАССИФИКАЦИИ
@@ -21,13 +22,14 @@ def evaluate_classification(y_test, y_pred):
     print(classification_report(y_test, y_pred))
 
 # ОЦЕНКА РЕГРЕССИИ
-def evaluate_regression(y_test, y_pred):
+def evaluate_regression(y_test, y_pred, model):
     print("\nОЦЕНКА РЕГРЕССИИ")
 
     mse = mean_squared_error(y_test, y_pred)
     rmse = np.sqrt(mse)
     mae = mean_absolute_error(y_test, y_pred)
-
+    r2 = r2_score(y_test, y_pred)
     print("MSE:", mse)
     print("RMSE:", rmse)
     print("MAE:", mae)
+    print("R2", r2)

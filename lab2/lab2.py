@@ -7,8 +7,8 @@ from regression import run_regression
 print("ЗАГРУЗКА ДАННЫХ")
 
 df = pd.read_csv("../data/processed_titanic.csv")
-df = df.dropna() #удаляем строки с пустыми ячейками
-print(df.shape) #размер таблицы
+df = df.dropna()
+print(df.shape)
 
 # КЛАССИФИКАЦИЯ
 print("\nКЛАССИФИКАЦИЯ")
