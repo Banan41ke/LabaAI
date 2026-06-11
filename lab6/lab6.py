@@ -8,9 +8,6 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-# ==========================================
-# 1. Подготовка данных и аугментация (Задание 2)
-# ==========================================
 train_datagen = ImageDataGenerator(
     rescale=1.0 / 255,
     rotation_range=20,  # Повороты изображений
@@ -39,9 +36,6 @@ val_data = train_datagen.flow_from_directory(
 num_classes = len(train_data.class_indices)
 class_labels = {v: k for k, v in train_data.class_indices.items()}
 
-# ==========================================
-# 2. Создание базовой/улучшенной CNN (Задание 1)
-# ==========================================
 custom_model = Sequential(
     [
         Conv2D(32, (3, 3), activation="relu", input_shape=(64, 64, 3)),
@@ -62,9 +56,6 @@ custom_model.compile(
 print("=== Обучение кастомной CNN ===")
 custom_model.fit(train_data, validation_data=val_data, epochs=5)
 
-# ==========================================
-# 3. Подключение предобученной MobileNetV2 (Задание 3)
-# ==========================================
 base_mobilenet = MobileNetV2(
     input_shape=(64, 64, 3), include_top=False, weights="imagenet"
 )
@@ -85,18 +76,12 @@ mobilenet_model.compile(
 print("\n=== Обучение модели на базе MobileNetV2 ===")
 mobilenet_model.fit(train_data, validation_data=val_data, epochs=5)
 
-# ==========================================
-# 4. Оценка моделей
-# ==========================================
 print("\n=== Сравнение результатов ===")
 loss_c, acc_c = custom_model.evaluate(val_data, verbose=0)
 loss_m, acc_m = mobilenet_model.evaluate(val_data, verbose=0)
 print(f"Точность кастомной CNN: {acc_c * 100:.2f}%")
 print(f"Точность MobileNetV2: {acc_m * 100:.2f}%")
 
-# ==========================================
-# 5. Тестирование на вашей фотографии (Пункт 1 задания)
-# ==========================================
 test_img_path = "test_gesture.jpg"
 
 if os.path.exists(test_img_path):
